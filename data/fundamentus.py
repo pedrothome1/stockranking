@@ -64,8 +64,10 @@ def get_stocks():
 
   return [{
     'ticker': x[0],
-    'volume': Decimal(x[17].replace('.', '').replace(',', '.')),
+    'company': x[0][:4],
     'evebit': Decimal(x[10].replace('.', '').replace(',', '.')),
+    'ebit_margin': Decimal(x[12].replace('.', '').replace(',', '.').replace('%', '')) / 100,
+    'volume': Decimal(x[17].replace('.', '').replace(',', '.')),
   } for x in tr_list if x != []]
 
 if __name__ == '__main__':
