@@ -6,18 +6,14 @@ from openpyxl import load_workbook
 import util
 import statusinvest
 
-def main():
-  parser = argparse.ArgumentParser()
-  parser.add_argument('-s', dest='statusinvest_template', help='StatusInvest spreadsheet template')
-  parser.add_argument('-b', dest='b3_export', help='Spreadsheet export from B3')
-  args = parser.parse_args()
-
-  wb_statusinvest = load_workbook(os.path.join(os.getcwd(), args.statusinvest_template))
+def main(statusinvest_template_path: str, b3_export_path: str):
+  wb_statusinvest = load_workbook(statusinvest_template_path)
   ws_statusinvest = wb_statusinvest.worksheets[0]
-  ws_b3 = load_workbook(os.path.join(os.getcwd(), args.b3_export)).worksheets[0]
+  ws_b3 = load_workbook(b3_export_path).worksheets[0]
 
   b3_rows = [[y.value for y in x] for x in ws_b3.iter_rows(min_row=2)]
   b3_rows = list(reversed(b3_rows))
+
   orders = [{
     'date': row[0],
     'category': statusinvest.get_asset_category(row[5]),
@@ -44,4 +40,11 @@ def main():
   wb_statusinvest.save('statusinvest.xlsx')
 
 if __name__ == '__main__':
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-s', dest='statusinvest_template', help='StatusInvest spreadsheet template')
+  parser.add_argument('-b', dest='b3_export', help='Spreadsheet export from B3')
+  args = parser.parse_args()
+
+  main(
+    os.path.join(os.getcwd(), args.statusinvest_template),
+    os.path.join(os.getcwd(), args.b3_export))
