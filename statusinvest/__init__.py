@@ -1,6 +1,6 @@
 from util import ETFS, FIIS
 
-BROKER = 'EASYNVEST - TITULO CV S.A.'
+BROKER = 'NU INVEST CORRETORA DE VALORES'
 
 def get_asset_category(ticker: str):
   if ticker in ETFS:
