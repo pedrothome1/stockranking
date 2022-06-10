@@ -25,7 +25,7 @@ def main(statusinvest_template_path: str, b3_export_path: str):
     'fee': util.get_total_fee(row[6] * Decimal(str(row[7]))),
   } for row in b3_rows]
 
-  for row_pos in range(2, len(orders) + 1):
+  for row_pos in range(2, len(orders) + 2):
     index = row_pos - 2
     order = orders[index]
     ws_statusinvest[f'A{row_pos}'] = order['date']
